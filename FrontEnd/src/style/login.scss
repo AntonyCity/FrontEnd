@@ -1,0 +1,39 @@
+.login {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  height: 60vh;
+
+  form {
+    background-color: var(--secondary-color);
+    padding: 1vw;
+    border-radius: 0.4vw;
+    height: 24vw;
+    width: 30vw;
+    display: grid;
+    gap: 1vw;
+
+    div {
+      display: grid;
+      height: 5vw;
+      margin: 0.5vw 1vw;
+      gap: 0.5vw;
+
+      input {
+        border: none;
+        height: 3.5vw;
+        border-radius: 0.5vw;
+        padding: 0 1vw;
+      }
+    }
+
+    button[type=submit] {
+      border: none;
+      width: 100%;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
