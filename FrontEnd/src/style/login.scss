@@ -4,6 +4,7 @@
   justify-items: center;
   height: 60vh;
 
+
   form {
     background-color: var(--secondary-color);
     padding: 1vw;
@@ -24,15 +25,22 @@
         height: 3.5vw;
         border-radius: 0.5vw;
         padding: 0 1vw;
+        font-size: 1.12vw;
+
       }
     }
 
     button[type=submit] {
       border: none;
       width: 100%;
+      background-color: var(--primary-color);
+      border-radius: 0.2vw 0.2vw 0.5vw 0.5vw;
+      color: white;
+      font-weight: 600;
 
       &:hover {
         cursor: pointer;
+        transform: scale(1.01);
       }
     }
   }

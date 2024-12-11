@@ -1,9 +1,19 @@
 import React, { useState } from "react";
+interface FormData {
+  name: string;
+  password: string;
+}
+
+interface ApiResponse {
+  Token: number;
+  name: string;
+  role: string;
+}
 
 const Login: React.FC = () => {
-  const [formData, setFormData] = useState({ username: "", password: "" });
-
-  const [error, setError] = useState("");
+  const [formData, setFormData] = useState<FormData>({ name: '' , password:''});
+  const [response, setResponse] = useState<ApiResponse | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -13,17 +23,31 @@ const Login: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!formData.username || !formData.password) {
+    console.log(formData)
+    if (!formData.name || !formData.password) {
       setError("Both fields are required.");
       return;
     }
+    try {
+      const response = await fetch('http://localhost:8003/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    console.log("Form submitted:", formData);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
-    setError("");
+      const data: ApiResponse = await response.json();
+      setResponse(data);
+    } catch (err: any) {
+      setError(err.message || 'Something went wrong');
+    } 
   };
 
   return (
@@ -33,12 +57,12 @@ const Login: React.FC = () => {
         {error && <div className="error">{error}</div>}
 
         <div>
-          <label htmlFor="username">Username</label>
+          <label htmlFor="name">name</label>
           <input
             type="text"
-            id="username"
-            name="username"
-            value={formData.username}
+            id="name"
+            name="name"
+            
             onChange={handleInputChange}
             required
           />
@@ -50,7 +74,6 @@ const Login: React.FC = () => {
             type="password"
             id="password"
             name="password"
-            value={formData.password}
             onChange={handleInputChange}
             required
           />

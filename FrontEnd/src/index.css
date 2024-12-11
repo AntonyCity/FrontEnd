@@ -9,6 +9,8 @@
   font-family: Helvetica, sans-serif;
   font-weight: 600;
   font-size: 1.12vw;
+  font-weight: 600;
+
 }
 
 button {
@@ -42,9 +44,14 @@ nav img {
   width: 7vw;
 }
 
-nav a {
+nav img nav a {
   color: var(--secondary-color);
   margin: 0 2vw;
+
+}
+
+nav a:hover {
+  transform: scale(1.05);
 
 }
 
