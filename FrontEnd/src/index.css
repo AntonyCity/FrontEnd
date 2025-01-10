@@ -44,10 +44,13 @@ nav img {
   width: 7vw;
 }
 
-nav img nav a {
+nav img:hover {
+  transform: scale(1.05);
+}
+
+nav a {
   color: var(--secondary-color);
   margin: 0 2vw;
-
 }
 
 nav a:hover {
