@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import {useNavigate  } from "react-router-dom";
+
 interface FormData {
   name: string;
   password: string;
 }
 
 interface ApiResponse {
-  Token: number;
+  token: number;
   name: string;
   role: string;
 }
@@ -14,6 +16,7 @@ const Login: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({ name: '' , password:''});
   const [response, setResponse] = useState<ApiResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -43,8 +46,13 @@ const Login: React.FC = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
+
       const data: ApiResponse = await response.json();
       setResponse(data);
+      if (response.ok) {
+        navigate("/");
+        sessionStorage.setItem('sessionData', JSON.stringify({ token: data.token, role : data.role, name: data.name}));
+      }
     } catch (err: any) {
       setError(err.message || 'Something went wrong');
     } 
