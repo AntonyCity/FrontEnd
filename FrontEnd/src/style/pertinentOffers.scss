@@ -1,0 +1,143 @@
+.pertinentOffers {
+  padding: 2vw;
+  box-sizing: border-box;
+
+  /* Header Section */
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2vw;
+
+    h1 {
+      font-size: 2vw;
+      margin: 0;
+    }
+  }
+
+  &__allOffersLink {
+    font-size: 1vw;
+    text-decoration: none;
+    color: #003366;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  /* Refine Search Section */
+  &__refine {
+    margin-bottom: 3vw;
+
+    h2 {
+      font-size: 1.5vw;
+      margin: 0 0 1vw 0;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 1vw;
+    margin-bottom: 2vw;
+
+    button {
+      padding: 0.5vw 1vw;
+      font-size: 1vw;
+      cursor: pointer;
+      border: 1px solid #003366;
+      border-radius: 0.3vw;
+    }
+  }
+
+  &__clearBtn {
+    background-color: transparent;
+    color: #003366;
+  }
+
+  &__applyBtn {
+    background-color: #003366;
+    color: #ffffff;
+  }
+
+  &__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3vw;
+  }
+
+  &__filterGroup {
+    p {
+      margin: 0 0 1vw 0;
+      font-size: 1.2vw;
+      font-weight: bold;
+    }
+  }
+
+  &__chips {
+    display: flex;
+    gap: 1vw;
+
+    button {
+      padding: 0.5vw 1vw;
+      font-size: 1vw;
+      background-color: #f5f7f9;
+      border: 1px solid #ccc;
+      border-radius: 0.3vw;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #003366;
+        color: #ffffff;
+        border-color: #003366;
+      }
+    }
+  }
+
+  /* Offers Grid */
+  &__offers {
+    &List {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(20vw, 1fr));
+      gap: 2vw;
+    }
+  }
+
+  &__offerCard {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 0.5vw;
+    padding: 1vw;
+    box-sizing: border-box;
+  }
+
+  &__offerTag {
+    display: inline-block;
+    background-color: #eee;
+    padding: 0.5vw;
+    margin-bottom: 1vw;
+    font-size: 1vw;
+    border-radius: 0.3vw;
+  }
+
+  &__offerImage {
+    background-color: #cccccc;
+    height: 8vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1vw;
+    font-size: 1vw;
+    text-align: center;
+  }
+
+  &__offerTitle {
+    font-size: 1.1vw;
+    margin: 0.5vw 0;
+    font-weight: bold;
+  }
+
+  &__offerCategory {
+    font-size: 1vw;
+    color: #666;
+  }
+}

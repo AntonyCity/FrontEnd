@@ -1,4 +1,8 @@
 @import url("style/login.scss");
+@import url("style/navBar.scss");
+@import url("style/sideBar.scss");
+@import url("style/home.scss");
+@import url("style/pertinentOffers.scss");
 
 :root {
   --primary-color: #1c2754;
@@ -11,6 +15,10 @@
   font-size: 1.12vw;
   font-weight: 600;
 
+}
+
+main {
+  display: flex;
 }
 
 button {

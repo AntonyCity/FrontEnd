@@ -2,30 +2,26 @@ import Login from './views/login.tsx'
 import Offres from './views/offres.tsx'
 import Home from './views/home.tsx'
 import CvAnalyse from './views/CvAnalyse.tsx'
-import logo from './assets/images/logo-banner.png'
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import NavBar from './components/NavBar.jsx';
+import SideBar from './components/SideBar.jsx';
+
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
 
   return (
     <>
     <Router>
-      <nav>
-        <Link to="/">
-        <img src={logo} alt="" />
-      </Link>
-      <div>
-        <Link  to="/login">Login </Link>
-        <Link  to="/offres">offres </Link>
-        <Link to="/cv-analyse">Analyse de CV</Link>
-      </div>
-      </nav>
+        <NavBar />
+      <main>
+        <SideBar />
       <Routes>
         <Route path="/login" element={<Login/>} />
         <Route path="/offres" element={<Offres />} />
-        <Route path='cv-analyse' element={<CvAnalyse />} />
+        <Route path='/cv-analyse' element={<CvAnalyse />} />
         <Route path="/" element={<Home />} />
       </Routes>
+      </main>
       </Router>
     </>
   )

@@ -1,0 +1,35 @@
+.navBar {
+  background-color: #003366;
+  height: 6vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2vw;
+  color: #ffffff;
+
+  &__logo {
+    font-size: 2vw;
+    font-weight: bold;
+
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+  }
+
+  &__logout {
+    background: none;
+    border: 1px solid #ffffff;
+    border-radius: 0.5vw;
+    padding: 0.5vw 1vw;
+    font-size: 1vw;
+    color: #ffffff;
+    cursor: pointer;
+  }
+}
