@@ -3,6 +3,7 @@
 @import url("style/sideBar.scss");
 @import url("style/home.scss");
 @import url("style/pertinentOffers.scss");
+@import url("style/offres.scss");
 
 :root {
   --primary-color: #1c2754;
