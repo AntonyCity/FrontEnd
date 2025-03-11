@@ -1,0 +1,119 @@
+.offers-container {
+  width: 90vw;
+  margin: 2vw auto;
+  padding: 2vw;
+  background: #f8f9fa;
+  border-radius: 1vw;
+
+  .title {
+    font-size: 2.5vw;
+    text-align: center;
+    margin-bottom: 2vw;
+    color: #333;
+  }
+
+  .offer-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2vw;
+    margin-bottom: 3vw;
+
+    .form-group {
+      flex: 1 1 45vw;
+      display: flex;
+      flex-direction: column;
+
+      label {
+        font-size: 1.2vw;
+        margin-bottom: 0.5vw;
+      }
+
+      input,
+      textarea {
+        font-size: 1vw;
+        padding: 0.8vw;
+        border: 1px solid #ccc;
+        border-radius: 0.5vw;
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 6vw;
+      }
+    }
+
+    .button-group {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1vw;
+
+      .clear-btn,
+      .submit-btn {
+        font-size: 1.2vw;
+        padding: 1vw 2vw;
+        border: none;
+        border-radius: 0.5vw;
+        cursor: pointer;
+      }
+
+      .clear-btn {
+        background: #ccc;
+        color: #000;
+      }
+
+      .submit-btn {
+        background: #007bff;
+        color: #fff;
+      }
+    }
+  }
+
+  .offers-title {
+    font-size: 2vw;
+    margin-bottom: 1vw;
+    color: #333;
+  }
+
+  .offers-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: 1vw;
+      font-size: 1vw;
+      text-align: left;
+    }
+
+    th {
+      background: #007bff;
+      color: #fff;
+    }
+
+    tr:nth-child(even) {
+      background: #f2f2f2;
+    }
+
+    .edit-btn,
+    .delete-btn {
+      font-size: 1vw;
+      padding: 0.5vw 1vw;
+      border: none;
+      border-radius: 0.5vw;
+      cursor: pointer;
+      margin-right: 0.5vw;
+    }
+
+    .edit-btn {
+      background: #28a745;
+      color: #fff;
+    }
+
+    .delete-btn {
+      background: #dc3545;
+      color: #fff;
+    }
+  }
+}
