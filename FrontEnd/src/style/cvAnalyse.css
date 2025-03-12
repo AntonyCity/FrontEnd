@@ -4,6 +4,11 @@
   flex-direction: column;
   align-items: center;
   gap: 32px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+  /* Styles pour la liste des CV */
 }
 .CvAnalyse h1 {
   color: #1f2937;
@@ -34,9 +39,10 @@
   margin-bottom: 2rem;
 }
 .CvAnalyse > div {
-  max-width: 600px;
+  width: 100%;
+  max-width: 800px;
   margin: 16px auto;
-  padding: 16px;
+  padding: 24px;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   background: white;
@@ -133,10 +139,131 @@
   color: #16a34a;
   border: 1px solid rgba(22, 163, 74, 0.2);
 }
+.CvAnalyse .cv-list-container {
+  max-width: 1200px !important;
+  width: 100%;
+}
+.CvAnalyse .cv-list-container h2 {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 24px;
+}
+.CvAnalyse .cv-list-container h2::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #1c2754;
+  border-radius: 2px;
+}
+.CvAnalyse .cv-list-container .loader-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 40px 0;
+}
+.CvAnalyse .cv-list-container .loader-container .loader {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(28, 39, 84, 0.2);
+  border-radius: 50%;
+  border-top-color: #1c2754;
+  animation: spin 1s linear infinite;
+}
+.CvAnalyse .cv-list-container .loader-container span {
+  color: #4b5563;
+  font-weight: 500;
+}
+.CvAnalyse .cv-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+.CvAnalyse .cv-card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(28, 39, 84, 0.1);
+}
+.CvAnalyse .cv-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+.CvAnalyse .cv-card h3 {
+  color: #1c2754;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid rgba(28, 39, 84, 0.2);
+  text-transform: capitalize;
+}
+.CvAnalyse .cv-card .cv-summary {
+  color: #4b5563;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.CvAnalyse .cv-card .cv-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.CvAnalyse .cv-card .cv-tags .cv-tag {
+  background-color: #e5e7eb;
+  color: #1c2754;
+  padding: 4px 10px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+.CvAnalyse .cv-card .cv-tags .cv-tag:hover {
+  background-color: rgba(28, 39, 84, 0.2);
+}
+.CvAnalyse .cv-card .cv-contact {
+  border-top: 1px solid rgba(28, 39, 84, 0.1);
+  padding-top: 12px;
+}
+.CvAnalyse .cv-card .cv-contact p {
+  margin: 4px 0;
+  font-size: 0.85rem;
+  color: #4b5563;
+}
+.CvAnalyse .cv-card .cv-contact p strong {
+  color: #1f2937;
+  font-weight: 600;
+}
 
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+@media (max-width: 768px) {
+  .CvAnalyse {
+    padding: 16px;
+  }
+  .CvAnalyse .upload-container form {
+    flex-direction: column;
+  }
+  .CvAnalyse .upload-container form input[type=file]::after {
+    content: "Selectionnez un CV (.pdf)";
+    font-size: 0.9rem;
+  }
+  .CvAnalyse .cv-grid {
+    grid-template-columns: 1fr;
   }
 }
 

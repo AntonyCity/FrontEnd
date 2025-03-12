@@ -1,15 +1,66 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist';
 import '../style/CvAnalyse.css';
 
-// Configure workerSrc
+
 GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+
+interface CV {
+    fullname: string;
+    summary: string;
+    tags: string;
+    phone: string;
+    email: string;
+}
+
+
+// FAKE DATA TO DELETE
+const mockCvData: CV[] = [
+    {
+        "fullname": "jhon doe",
+        "summary": "Médicament homéopathique traditionnellement utilisé dans le traitement des symptômes des états grippaux",
+        "tags": "tag1, tag2, tag3",
+        "phone": "06050403", 
+        "email": "jhon.doe@gmail.com"
+    },
+    {
+        "fullname": "vicktor re",
+        "summary": "Médicament homéopathique traditionnellement utilisé dans le traitement des symptômes des états grippaux",
+        "tags": "tag1, tag2, tag3",
+        "phone": "06050403", 
+        "email": "vicktor.re@gmail.com"
+    },
+    {
+        "fullname": "ter jui",
+        "summary": "Médicament homéopathique traditionnellement utilisé dans le traitement des symptômes des états grippaux",
+        "tags": "tag1, tag2, tag3",
+        "phone": "06050403", 
+        "email": "ter.jui@gmail.com"
+    }
+];
 
 function CvAnalyse() {
     const [file, setFile] = useState<File | null>(null);
     const [message, setMessage] = useState('');
     const [isError, setIsError] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [cvList, setCvList] = useState<CV[]>([]);
+    const [isLoadingCvs, setIsLoadingCvs] = useState(false);
+
+    // DATA SIMULATION-------
+    useEffect(() => {
+        fetchCvList();
+    }, []);
+
+    const fetchCvList = async () => {
+        setIsLoadingCvs(true);
+        
+        setTimeout(() => {
+            setCvList(mockCvData);
+            setIsLoadingCvs(false);
+        }, 800);
+    };
+    // DATA SIMULATION-------
 
     const extractTextFromPDF = async (file: File) => {
         try {
@@ -44,24 +95,28 @@ function CvAnalyse() {
         try {
             const extractedText = await extractTextFromPDF(file);
 
-            const response = await fetch('http://localhost:8003/cv/upload', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    pdfText: extractedText,
-                }),
-            });
-
-            const result = await response.json();
-            setMessage(result.message || 'File uploaded successfully.');
-            setIsError(false);
+            // DATA SIMULATION-------
+            setTimeout(() => {
+                const newCv: CV = {
+                    fullname: file.name.replace('.pdf', ''),
+                    summary: "Nouveau CV analysé automatiquement. Profil professionnel avec expérience dans le développement web.",
+                    tags: "développement, web, javascript",
+                    phone: "07" + Math.floor(Math.random() * 90000000 + 10000000), 
+                    email: file.name.replace('.pdf', '').toLowerCase().replace(' ', '.') + "@example.com"
+                };
+                
+                setCvList([newCv, ...cvList]);
+                
+                setMessage('CV analysé et ajouté avec succès!');
+                setIsError(false);
+                setIsLoading(false);
+            }, 2000);
+            // DATA SIMULATION-------
+            
         } catch (error) {
             console.error('Error uploading file:', error);
-            setMessage('File upload failed.');
+            setMessage('Analyse du CV échouée.');
             setIsError(true);
-        } finally {
             setIsLoading(false);
         }
     };
@@ -93,8 +148,36 @@ function CvAnalyse() {
                 </form>
                 {message && <p className={isError ? 'error' : 'success'}>{message}</p>}
             </div>
-            <div>
-            <h2>Tous les CVs</h2>
+            <div className="cv-list-container">
+                <h2>Tous les CVs</h2>
+                {isLoadingCvs ? (
+                    <div className="loader-container">
+                        <div className="loader"></div>
+                        <span>Chargement des CVs...</span>
+                    </div>
+                ) : (
+                    cvList.length > 0 ? (
+                        <div className="cv-grid">
+                            {cvList.map((cv, index) => (
+                                <div key={index} className="cv-card">
+                                    <h3>{cv.fullname}</h3>
+                                    <p className="cv-summary">{cv.summary}</p>
+                                    <div className="cv-tags">
+                                        {cv.tags.split(',').map((tag, tagIndex) => (
+                                            <span key={tagIndex} className="cv-tag">{tag.trim()}</span>
+                                        ))}
+                                    </div>
+                                    <div className="cv-contact">
+                                        <p><strong>Email:</strong> {cv.email}</p>
+                                        <p><strong>Téléphone:</strong> {cv.phone}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <p>Aucun CV disponible pour le moment.</p>
+                    )
+                )}
             </div>
         </main>
     );
