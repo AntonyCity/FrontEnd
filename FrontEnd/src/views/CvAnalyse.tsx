@@ -17,25 +17,25 @@ interface CV {
 // FAKE DATA TO DELETE
 const mockCvData: CV[] = [
     {
-        "fullname": "jhon doe",
-        "summary": "Médicament homéopathique traditionnellement utilisé dans le traitement des symptômes des états grippaux",
-        "tags": "tag1, tag2, tag3",
-        "phone": "06050403", 
-        "email": "jhon.doe@gmail.com"
+        "fullname": "Gilles Legros",
+        "summary": "Développeur web et UX/UI designer avec 5 ans d'expérience. Je suis à la recherche d'un CDI dans une entreprise dynamique et innovante.",
+        "tags": "Développeur, UX/UI designer, CDI",
+        "phone": "0691828302", 
+        "email": "gill-legros@gmail.com"
     },
     {
-        "fullname": "vicktor re",
-        "summary": "Médicament homéopathique traditionnellement utilisé dans le traitement des symptômes des états grippaux",
-        "tags": "tag1, tag2, tag3",
-        "phone": "06050403", 
-        "email": "vicktor.re@gmail.com"
+        "fullname": "Jeremy Léonard",
+        "summary": "Développeur web full-stack avec 3 ans d'expérience. Je suis passionné par les nouvelles technologies et je suis à la recherche de nouveaux défis.",
+        "tags": "Développeur, web, full-stack",
+        "phone": "0683028234", 
+        "email": "jeremyleonard@gmail.com"
     },
     {
-        "fullname": "ter jui",
-        "summary": "Médicament homéopathique traditionnellement utilisé dans le traitement des symptômes des états grippaux",
-        "tags": "tag1, tag2, tag3",
-        "phone": "06050403", 
-        "email": "ter.jui@gmail.com"
+        "fullname": "Alice Dordon",
+        "summary": "Développeuse web junior avec 1 an d'expérience. Je suis à la recherche d'un stage de fin d'études pour valider mon diplôme.",
+        "tags": "Développeur, web, junior",
+        "phone": "0718374993", 
+        "email": "dordonalice@gmail.com"
     }
 ];
 
@@ -99,10 +99,10 @@ function CvAnalyse() {
             setTimeout(() => {
                 const newCv: CV = {
                     fullname: file.name.replace('.pdf', ''),
-                    summary: "Nouveau CV analysé automatiquement. Profil professionnel avec expérience dans le développement web.",
-                    tags: "développement, web, javascript",
-                    phone: "07" + Math.floor(Math.random() * 90000000 + 10000000), 
-                    email: file.name.replace('.pdf', '').toLowerCase().replace(' ', '.') + "@example.com"
+                    summary: "Développeur web full-stack avec 1 ans d'expérience. Je suis passionné par les nouvelles technologies et je suis à la recherche d'un contrat en alternance pou un Master.",
+                    tags: "Développeur web, Full-stack, Alternance",
+                    phone: "0611688567", 
+                    email: "renaudbrevin@gmail.com"
                 };
                 
                 setCvList([newCv, ...cvList]);
