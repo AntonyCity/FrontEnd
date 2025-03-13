@@ -94,7 +94,7 @@ function CvAnalyse() {
 
         try {
             const extractedText = await extractTextFromPDF(file);
-
+            console.log('Extracted text:', extractedText);
             // DATA SIMULATION-------
             setTimeout(() => {
                 const newCv: CV = {

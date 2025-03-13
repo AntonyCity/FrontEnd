@@ -1,6 +1,6 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 
-    interface Offer {
+interface Offer {
     id: number;
     title: string;
     location: string;
@@ -21,6 +21,12 @@ interface FormData {
     tags: string;
 }
 
+interface OffersResponse {
+    offers: Offer[];
+    // Add other properties here if needed later
+}
+  
+
 const Offres: React.FC = () => {
     const [offers, setOffers] = useState<Offer[]>([]);
     const [formData, setFormData] = useState<FormData>({
@@ -39,20 +45,21 @@ const Offres: React.FC = () => {
     fetchOffers();
     }, []);
 
-    const fetchOffers = async () => {
+const fetchOffers = async () => {
     try {
         const response = await fetch(`${import.meta.env.VITE_API_URL}/offre/display`, {
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token?.token}`
-        }
+            'Authorization': `Bearer ${token?.token}`,
+        },
         });
-        const data: Offer[] = await response.json();
-        setOffers(data.offers);
+    const data: OffersResponse = await response.json();
+    setOffers(data.offers); 
     } catch (error) {
-        console.error('Error fetching offers:', error);
+    console.error('Error fetching offers:', error);
     }
 };
+
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;

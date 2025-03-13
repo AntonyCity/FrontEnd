@@ -54,6 +54,7 @@ const Login: React.FC = () => {
         sessionStorage.setItem('sessionData', JSON.stringify({ token: data.token, role : data.role, name: data.name}));
       }
     } catch (err: any) {
+      console.log(response)
       setError(err.message || 'Something went wrong');
     } 
   };
