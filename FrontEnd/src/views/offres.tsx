@@ -1,174 +1,276 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 
-interface Offer {
+    interface Offer {
     id: number;
     title: string;
+    location: string;
     content: string;
+    requirements: string;
+    salary: string;
+    contractType: string;
     tags?: string;
-}
+    }
 
 interface FormData {
     title: string;
+    location: string;
     content: string;
+    requirements: string;
+    salary: string;
+    contractType: string;
     tags: string;
 }
 
 const Offres: React.FC = () => {
     const [offers, setOffers] = useState<Offer[]>([]);
     const [formData, setFormData] = useState<FormData>({
-        title: '',
-        content: '',
-        tags: '',
+    title: '',
+    location: '',
+    content: '',
+    requirements: '',
+    salary: '',
+    contractType: '',
+    tags: '',
     });
-    
+
     const token = JSON.parse(sessionStorage.getItem('sessionData') || '""');
-    console.log(token.token)
+
     useEffect(() => {
-        fetchOffers();
+    fetchOffers();
+    console.log(offers);
     }, []);
 
     const fetchOffers = async () => {
-      const response = await fetch('http://localhost:8003/offre/display', {
-        headers: { 
-          'Content-Type': 'application/json' ,
-          'Authorization': `Bearer ${token?.token}` 
+    try {
+        const response = await fetch('http://localhost:3000/offre/display', {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token?.token}`
         }
-    });
+        });
         const data: Offer[] = await response.json();
-        setOffers(data);
-    };
+        setOffers(data.offers);
+        console.log(data);
+    } catch (error) {
+        console.error('Error fetching offers:', error);
+    }
+};
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+    const { name, value } = e.target;
+    setFormData(prevData => ({
+        ...prevData,
+        [name]: value,
+    }));
     };
 
     const handleAddOffer = async (e: FormEvent) => {
-        e.preventDefault();
-        const data = { ...formData};
-
-        await fetch('http://localhost:8003/offre/add', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' ,
-          'Authorization': `Bearer ${token?.token}` 
-
-            },
-            body: JSON.stringify(data)
+    e.preventDefault();
+    const data = { ...formData };
+    try {
+        await fetch('http://localhost:3000/offre/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token?.token}`
+        },
+        body: JSON.stringify(data)
         });
-
-        setFormData({ title: '', content: '', tags: '' });
+      // Reset the form
+        setFormData({
+        title: '',
+        location: '',
+        content: '',
+        requirements: '',
+        salary: '',
+        contractType: '',
+        tags: '',
+        });
         fetchOffers();
+    } catch (error) {
+        console.error('Error adding offer:', error);
+    }
     };
 
     const handleEditOffer = async (id: number) => {
-        const newTitle = prompt('Enter new title:');
-        const newContent = prompt('Enter new content:');
-        const newTags = prompt('Enter new tags (optional):');
-        const newPublished = prompt('Enter new published date (YYYY-MM-DDTHH:mm):');
-
-        if (newTitle && newContent && newPublished) {
-            await fetch('http://localhost:8003/offre/update', {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' ,
-          'Authorization': `Bearer ${token?.token}` 
-
-                },
-                body: JSON.stringify({
-                    id,
-                    title: newTitle,
-                    content: newContent,
-                    tags: newTags,
-                    published: new Date(newPublished).toISOString()
-                })
-            });
-
-            fetchOffers();
+    const newTitle = prompt('Enter new Job Title:');
+    const newLocation = prompt('Enter new Localisation:');
+    const newContent = prompt('Enter new Description:');
+    const newRequirements = prompt('Enter new Requis:');
+    const newSalary = prompt('Enter new Salaire moyen:');
+    const newContractType = prompt('Enter new Type de contract:');
+    const newTags = prompt('Enter new Tags (optional):');
+    
+    if (
+        newTitle &&
+        newLocation &&
+        newContent &&
+        newRequirements &&
+        newSalary &&
+        newContractType
+    ) {
+        try {
+        await fetch('http://localhost:3000/offre/update', {
+            method: 'PUT',
+            headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token?.token}`
+            },
+            body: JSON.stringify({
+            id,
+            title: newTitle,
+            location: newLocation,
+            content: newContent,
+            requirements: newRequirements,
+            salary: newSalary,
+            contractType: newContractType,
+            tags: newTags
+            })
+        });
+        fetchOffers();
+        } catch (error) {
+        console.error('Error updating offer:', error);
         }
+    }
     };
 
     const handleDeleteOffer = async (id: number) => {
-        if (window.confirm('Are you sure you want to delete this offer?')) {
-            await fetch('http://localhost:8003/offre/delete', {
-                method: 'DELETE',
-                headers: { 'Content-Type': 'application/json',
-                          'Authorization': `Bearer ${token?.token}`   
-                  },
-                body: JSON.stringify({ id })
-            });
-
-            fetchOffers();
+    if (window.confirm('Are you sure you want to delete this offer?')) {
+        try {
+        await fetch('http://localhost:3000/offre/delete', {
+            method: 'DELETE',
+            headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token?.token}`
+            },
+            body: JSON.stringify({ id })
+        });
+        fetchOffers();
+        } catch (error) {
+        console.error('Error deleting offer:', error);
         }
-    };
+    }
+};
 
     return (
-        <div>
-            <h1>Manage Offers</h1>
-
-            <form onSubmit={handleAddOffer}>
-                <div>
-                    <label>Title:</label>
-                    <input
-                        type="text"
-                        name="title"
-                        value={formData.title}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Content:</label>
-                    <textarea
-                        name="content"
-                        value={formData.content}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Tags:</label>
-                    <input
-                        type="text"
-                        name="tags"
-                        value={formData.tags}
-                        onChange={handleInputChange}
-                    />
-                </div>
-                
-                <button type="submit">Add Offer</button>
-            </form>
-
-            <h2>Offers</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Title</th>
-                        <th>Content</th>
-                        <th>Tags</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                {offers?.length > 0 ? (
-                        offers.map((offer) => (
-                            <tr key={offer.id}>
-                                <td>{offer.id}</td>
-                                <td>{offer.title}</td>
-                                <td>{offer.content}</td>
-                                <td>{offer.tags || ''}</td>
-                                <td>
-                                    <button onClick={() => handleEditOffer(offer.id)}>Edit</button>
-                                    <button onClick={() => handleDeleteOffer(offer.id)}>Delete</button>
-                                </td>
-                            </tr>
-                        ))
-                    ) : (
-                        <tr>
-                            <td colSpan={6}>No offers available</td>
-                        </tr>
-                    )}
-                </tbody>
-            </table>
+    <div className="offers-container">
+        <h1 className="title">Créer une annonce</h1>
+        
+        <form onSubmit={handleAddOffer} className="offer-form">
+            <div className="form-group">
+            <label>Job Title:</label>
+            <input
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleInputChange}
+                required
+            />
+            </div>
+            <div className="form-group">
+            <label>Localisation:</label>
+            <input
+                type="text"
+                name="location"
+                value={formData.location}
+                onChange={handleInputChange}
+                required
+            />
+            </div>
+            <div className="form-group">
+            <label>Description:</label>
+            <textarea
+                name="content"
+                value={formData.content}
+                onChange={handleInputChange}
+                required
+            />
+            </div>
+            <div className="form-group">
+            <label>Requis:</label>
+            <textarea
+                name="requirements"
+                value={formData.requirements}
+                onChange={handleInputChange}
+                required
+            />
+            </div>
+            <div className="form-group">
+            <label>Salaire moyen:</label>
+            <input
+                type="text"
+                name="salary"
+                value={formData.salary}
+                onChange={handleInputChange}
+                required
+            />
+            </div>
+            <div className="form-group">
+            <label>Type de contract:</label>
+            <input
+                type="text"
+                name="contractType"
+                value={formData.contractType}
+                onChange={handleInputChange}
+                required
+            />
+            </div>
+            <div className="form-group">
+            <label>Tags:</label>
+            <input
+                type="text"
+                name="tags"
+                value={formData.tags}
+                onChange={handleInputChange}
+            />
+            </div>
+            <div className="button-group">
+            <button type="reset" className="clear-btn">Clear Form</button>
+            <button type="submit" className="submit-btn">Publier l'annonce</button>
+            </div>
+        </form>
+        
+        <h2 className="offers-title">Annonces</h2>
+        <table className="offers-table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Job Title</th>
+                <th>Localisation</th>
+                <th>Description</th>
+                <th>Requis</th>
+                <th>Salaire moyen</th>
+                <th>Type de contract</th>
+                <th>Tags</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {offers ? (
+                console.log(offers),
+                offers.map((offer) => (
+                <tr key={offer.id}>
+                    <td>{offer.id}</td>
+                    <td>{offer.title}</td>
+                    <td>{offer.location}</td>
+                    <td>{offer.content}</td>
+                    <td>{offer.requirements}</td>
+                    <td>{offer.salary}</td>
+                    <td>{offer.contractType}</td>
+                    <td>{offer.tags || ''}</td>
+                    <td>
+                    <button onClick={() => handleEditOffer(offer.id)} className="edit-btn">Edit</button>
+                    <button onClick={() => handleDeleteOffer(offer.id)} className="delete-btn">Delete</button>
+                    </td>
+                </tr>
+                ))
+            ) : (
+                <tr>
+                <td colSpan={9}>No offers available</td>
+                </tr>
+            )}
+            </tbody>
+        </table>
         </div>
     );
 };
