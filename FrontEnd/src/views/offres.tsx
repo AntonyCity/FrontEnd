@@ -37,12 +37,11 @@ const Offres: React.FC = () => {
 
     useEffect(() => {
     fetchOffers();
-    console.log(offers);
     }, []);
 
     const fetchOffers = async () => {
     try {
-        const response = await fetch('http://localhost:3000/offre/display', {
+        const response = await fetch(`${import.meta.env.VITE_API_URL}/offre/display`, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token?.token}`
@@ -50,7 +49,6 @@ const Offres: React.FC = () => {
         });
         const data: Offer[] = await response.json();
         setOffers(data.offers);
-        console.log(data);
     } catch (error) {
         console.error('Error fetching offers:', error);
     }
@@ -68,7 +66,7 @@ const Offres: React.FC = () => {
     e.preventDefault();
     const data = { ...formData };
     try {
-        await fetch('http://localhost:3000/offre/add', {
+        await fetch(`${import.meta.env.VITE_API_URL}/offre/add`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -110,7 +108,7 @@ const Offres: React.FC = () => {
         newContractType
     ) {
         try {
-        await fetch('http://localhost:3000/offre/update', {
+        await fetch(`${import.meta.env.VITE_API_URL}/offre/update`, {
             method: 'PUT',
             headers: {
             'Content-Type': 'application/json',
@@ -137,7 +135,7 @@ const Offres: React.FC = () => {
     const handleDeleteOffer = async (id: number) => {
     if (window.confirm('Are you sure you want to delete this offer?')) {
         try {
-        await fetch('http://localhost:3000/offre/delete', {
+        await fetch(`${import.meta.env.VITE_API_URL}/offre/delete`, {
             method: 'DELETE',
             headers: {
             'Content-Type': 'application/json',
@@ -151,6 +149,8 @@ const Offres: React.FC = () => {
         }
     }
 };
+console.log("API URL:", import.meta.env.VITE_API_URL);
+
 
     return (
     <div className="offers-container">
@@ -247,7 +247,6 @@ const Offres: React.FC = () => {
             </thead>
             <tbody>
             {offers ? (
-                console.log(offers),
                 offers.map((offer) => (
                 <tr key={offer.id}>
                     <td>{offer.id}</td>

@@ -1,20 +1,28 @@
 import React from 'react';
-import logo from '../assets/images/logo-banner.png'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import logo from '../assets/images/logo-banner.svg'
+
 
 const NavBar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("sessionData"); // Remove the session data
+    navigate('/login'); // Redirect to login page
+  };
+
   return (
     <nav className="navBar">
       <div className="navBar__logo">
         <Link to="/">
-          <img src={logo} alt="" />
-          Mnt
+          <img src={logo} alt="Logo" />
         </Link>
       </div>
 
       <div className="navBar__actions">
-        {/* Example icons or buttons can go here */}
-        <a className="navBar__logout" href='/login'  >Déconnexion</a>
+        <button className="navBar__logout" onClick={handleLogout}>
+          Déconnexion
+        </button>
       </div>
     </nav>
   );

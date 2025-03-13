@@ -1,20 +1,26 @@
 .navBar {
-  background-color: #003366;
-  height: 6vw;
+  background-color: #003366; // Deep blue background
+  height: 6vw; // Adjust height relative to viewport width
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2vw 0;
+  padding: 0 2vw;
   color: #ffffff;
 
   &__logo {
-    font-size: 2vw;
-    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.8vw; // Space between logo and text
+
+    img {
+      height: 3vw; // Scale logo size relative to viewport
+    }
 
     a {
       display: flex;
       align-items: center;
-      justify-content: center;
+      font-size: 2vw; // Adjust font size
+      font-weight: bold;
     }
   }
 
@@ -24,12 +30,18 @@
   }
 
   &__logout {
-    background: none;
-    border: 1px solid #ffffff;
+    background-color: transparent;
+    border: 0.2vw solid #ffffff;
     border-radius: 0.5vw;
-    padding: 0.5vw 1vw;
+    padding: 0.6vw 1.2vw;
     font-size: 1vw;
     color: #ffffff;
     cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      background-color: #ffffff;
+      color: #003366;
+    }
   }
 }
