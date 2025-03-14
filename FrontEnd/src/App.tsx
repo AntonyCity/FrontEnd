@@ -16,10 +16,10 @@ function App() {
       <main>
         <SideBar />
       <Routes>
-        <Route path="/login" element={<Login/>} />
+        <Route path="/" element={<Login/>} />
         <Route path="/offres" element={<Offres />} />
         <Route path='/cv-analyse' element={<CvAnalyse />} />
-        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
       </Routes>
       </main>
       </Router>

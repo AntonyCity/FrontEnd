@@ -50,7 +50,7 @@ const Login: React.FC = () => {
       const data: ApiResponse = await response.json();
       setResponse(data);
       if (response.ok) {
-        navigate("/");
+        navigate("/home");
         sessionStorage.setItem('sessionData', JSON.stringify({ token: data.token, role : data.role, name: data.name}));
       }
     } catch (err: any) {
